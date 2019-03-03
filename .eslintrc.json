@@ -1,0 +1,53 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true,
+      "modules": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react", "jest", "import"],
+  "rules": {
+    "import/newline-after-import": 2,
+    "import/no-duplicates": 2,
+    "jest/no-disabled-tests": "error",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "error",
+    "jest/valid-expect": "off",
+    "linebreak-style": ["error", "unix"],
+    "max-params": ["error", 3],
+    "newline-after-var": "error",
+    "newline-before-return": "error",
+    "no-console": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    "semi": ["error", "always"]
+  },
+  "settings": {
+    "propWrapperFunctions": ["forbidExtraProps"],
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}
