@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TenantProvider renders correctly 1`] = `
+<Fragment>
+  <ReactHotkeys
+    keyName="down"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+  />
+  <ReactHotkeys
+    keyName="up"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+  />
+  <ReactHotkeys
+    keyName="right"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+  />
+  <ReactHotkeys
+    keyName="left"
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+  />
+  <ContextProvider
+    value={
+      Object {
+        "countDown": 0,
+        "countLeft": 0,
+        "countRight": 0,
+        "countUp": 0,
+      }
+    }
+  >
+    <div>
+      test
+    </div>
+  </ContextProvider>
+</Fragment>
+`;
