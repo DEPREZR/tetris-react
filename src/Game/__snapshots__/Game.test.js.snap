@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game renders correctly 1`] = `
+<Fragment>
+  <p>
+    You pressed down arrow 3 times
+  </p>
+  <p>
+    You pressed left arrow 2 times
+  </p>
+</Fragment>
+`;
