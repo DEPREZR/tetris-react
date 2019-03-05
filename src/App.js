@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import InputsListener from '../src/InputsListener';
-import Game from '../src/Game';
+import InputsListener from 'InputsListener';
+import Game from 'Game';
 
 class App extends Component {
   render() {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { InputsContext } from '../InputsListener';
+import { InputsContext } from 'InputsListener';
 import PropTypes from 'prop-types';
 
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
