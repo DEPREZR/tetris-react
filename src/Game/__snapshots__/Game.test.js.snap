@@ -8,5 +8,14 @@ exports[`Game renders correctly 1`] = `
   <p>
     You pressed left arrow 2 times
   </p>
+  <canvas
+    height={600}
+    style={
+      Object {
+        "border": "2px solid black",
+      }
+    }
+    width={300}
+  />
 </Fragment>
 `;
