@@ -3,6 +3,7 @@ import { InputsContext } from 'InputsListener';
 import PropTypes from 'prop-types';
 import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
+import { INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED } from 'constants.js';
 
 const callbackLeftInputPressed = () => console.log('Left pressed');
 
@@ -22,7 +23,7 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
       callbackLeftInputPressed();
       intervalId.current = setInterval(() => {
         callbackLeftInputPressed();
-      }, 1000);
+      }, INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED);
     } else {
       clearInterval(intervalId.current);
     }
