@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
 
+const callbackLeftInputPressed = () => console.log('Left pressed');
+
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
   const { pressedDown, pressedLeft } = inputsContext;
   const refCanvasTetris = useRef(null);
@@ -17,9 +19,9 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
 
   useEffect(() => {
     if (pressedLeft) {
-      console.log('Left pressed');
+      callbackLeftInputPressed();
       intervalId.current = setInterval(() => {
-        console.log('Left pressed');
+        callbackLeftInputPressed();
       }, 1000);
     } else {
       clearInterval(intervalId.current);

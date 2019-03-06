@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TenantProvider renders correctly 1`] = `
+exports[`InputsListener renders correctly 1`] = `
 <Fragment>
   <ReactHotkeys
     keyName="down"

@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 
 export const InputsContext = React.createContext();
 
-export const handleKeyPressed = ({ pressed, setPressed }) => () =>
+export const handleKeyPressed = ({ pressed, setPressed }) => (keyName, e) => {
+  e.preventDefault();
   setPressed(pressed);
+};
 
 const InputsListener = ({ children }) => {
   const [pressedDown, setPressedDown] = useState(false);

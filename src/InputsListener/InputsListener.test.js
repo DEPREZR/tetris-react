@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import InputsListener, { handleKeyPressed } from '.';
 
-describe('TenantProvider', () => {
+describe('InputsListener', () => {
   it('renders correctly', () => {
     const wrapper = shallow(
       <InputsListener>
@@ -15,17 +15,22 @@ describe('TenantProvider', () => {
 });
 
 describe('handleKeyPressed', () => {
-  it('should setPressed with pressed', () => {
+  it('should setPressed with pressed and call e.preventDefault()', () => {
     const params = { pressed: true, setPressed: jest.fn() };
+    const e = { preventDefault: jest.fn() };
 
-    handleKeyPressed(params)();
+    handleKeyPressed(params)(null, e);
 
     expect(params.setPressed).toHaveBeenCalledWith(params.pressed);
+    expect(e.preventDefault).toHaveBeenCalledWith();
 
     params.pressed = false;
+    e.preventDefault.mockClear();
+    params.setPressed.mockClear();
 
-    handleKeyPressed(params)();
+    handleKeyPressed(params)(null, e);
 
     expect(params.setPressed).toHaveBeenCalledWith(params.pressed);
+    expect(e.preventDefault).toHaveBeenCalledWith();
   });
 });
