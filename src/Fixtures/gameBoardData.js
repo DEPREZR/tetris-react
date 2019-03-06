@@ -1,43 +1,24 @@
 export const gameBoardDataFixtures = [
   [
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, null, null, null, null, null, null, null],
-
     [null, null, null, { color: 'blue' }, null, null, null, null, null, null],
-
     [
       null,
       null,
@@ -50,7 +31,6 @@ export const gameBoardDataFixtures = [
       null,
       null
     ],
-
     [
       { color: 'red' },
       null,
@@ -63,7 +43,6 @@ export const gameBoardDataFixtures = [
       null,
       null
     ],
-
     [
       { color: 'red' },
       { color: 'red' },
