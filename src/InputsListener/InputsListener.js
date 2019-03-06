@@ -4,44 +4,63 @@ import PropTypes from 'prop-types';
 
 export const InputsContext = React.createContext();
 
-export const handleKeyPressed = ({ count, setCount }) => () =>
-  setCount(count + 1);
+export const handleKeyPressed = ({ pressed, setPressed }) => () =>
+  setPressed(pressed);
 
 const InputsListener = ({ children }) => {
-  const [countDown, setCountDown] = useState(0);
-  const [countUp, setCountUp] = useState(0);
-  const [countRight, setCountRight] = useState(0);
-  const [countLeft, setCountLeft] = useState(0);
+  const [pressedDown, setPressedDown] = useState(false);
+  const [pressedUp, setPressedUp] = useState(false);
+  const [pressedRight, setPressedRight] = useState(false);
+  const [pressedLeft, setPressedLeft] = useState(false);
 
   return (
     <React.Fragment>
       <Hotkeys
         keyName="down"
         onKeyDown={handleKeyPressed({
-          count: countDown,
-          setCount: setCountDown
+          pressed: true,
+          setPressed: setPressedDown
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedDown
         })}
       />
       <Hotkeys
         keyName="up"
-        onKeyDown={handleKeyPressed({ count: countUp, setCount: setCountUp })}
+        onKeyDown={handleKeyPressed({
+          pressed: true,
+          setPressed: setPressedUp
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedUp
+        })}
       />
       <Hotkeys
         keyName="right"
         onKeyDown={handleKeyPressed({
-          count: countRight,
-          setCount: setCountRight
+          pressed: true,
+          setPressed: setPressedRight
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedRight
         })}
       />
       <Hotkeys
         keyName="left"
         onKeyDown={handleKeyPressed({
-          count: countLeft,
-          setCount: setCountLeft
+          pressed: true,
+          setPressed: setPressedLeft
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedLeft
         })}
       />
       <InputsContext.Provider
-        value={{ countDown, countUp, countRight, countLeft }}
+        value={{ pressedDown, pressedUp, pressedRight, pressedLeft }}
       >
         {children}
       </InputsContext.Provider>

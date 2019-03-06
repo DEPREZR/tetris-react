@@ -15,11 +15,17 @@ describe('TenantProvider', () => {
 });
 
 describe('handleKeyPressed', () => {
-  it('should setCount with count+1', () => {
-    const params = { count: 3, setCount: jest.fn() };
+  it('should setPressed with pressed', () => {
+    const params = { pressed: true, setPressed: jest.fn() };
 
     handleKeyPressed(params)();
 
-    expect(params.setCount).toHaveBeenCalledWith(params.count + 1);
+    expect(params.setPressed).toHaveBeenCalledWith(params.pressed);
+
+    params.pressed = false;
+
+    handleKeyPressed(params)();
+
+    expect(params.setPressed).toHaveBeenCalledWith(params.pressed);
   });
 });

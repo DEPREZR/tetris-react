@@ -5,8 +5,9 @@ import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
 
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
-  const { countDown, countLeft } = inputsContext;
+  const { pressedDown, pressedLeft } = inputsContext;
   const refCanvasTetris = useRef(null);
+  const intervalId = useRef(undefined);
 
   useEffect(() => {
     const ctx = refCanvasTetris.current.getContext('2d');
@@ -14,10 +15,21 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
     drawGameBoard({ ctx, gameBoardData: gameBoardDataFixtures[0] });
   }, [refCanvasTetris]);
 
+  useEffect(() => {
+    if (pressedLeft) {
+      console.log('Left pressed');
+      intervalId.current = setInterval(() => {
+        console.log('Left pressed');
+      }, 1000);
+    } else {
+      clearInterval(intervalId.current);
+    }
+  }, [pressedLeft]);
+
   return (
     <React.Fragment>
-      <p>{`You pressed down arrow ${countDown} times`}</p>
-      <p>{`You pressed left arrow ${countLeft} times`}</p>
+      <p>{`You are ${pressedDown ? '' : 'not'} pressing down arrow`}</p>
+      <p>{`You are ${pressedLeft ? '' : 'not'} pressing left arrow`}</p>
       <canvas
         ref={refCanvasTetris}
         width={300}

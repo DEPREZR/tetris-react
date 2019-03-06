@@ -3,10 +3,10 @@
 exports[`Game renders correctly 1`] = `
 <Fragment>
   <p>
-    You pressed down arrow 3 times
+    You are not pressing down arrow
   </p>
   <p>
-    You pressed left arrow 2 times
+    You are not pressing left arrow
   </p>
   <canvas
     height={600}

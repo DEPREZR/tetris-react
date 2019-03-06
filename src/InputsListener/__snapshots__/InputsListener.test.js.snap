@@ -25,10 +25,10 @@ exports[`TenantProvider renders correctly 1`] = `
   <ContextProvider
     value={
       Object {
-        "countDown": 0,
-        "countLeft": 0,
-        "countRight": 0,
-        "countUp": 0,
+        "pressedDown": false,
+        "pressedLeft": false,
+        "pressedRight": false,
+        "pressedUp": false,
       }
     }
   >
