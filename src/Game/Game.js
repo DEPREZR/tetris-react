@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { InputsContext } from 'InputsListener';
 import PropTypes from 'prop-types';
-import { drawGameBoard } from 'businessHelpers/businessHelpers';
+import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
 
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
