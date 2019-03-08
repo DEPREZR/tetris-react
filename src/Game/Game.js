@@ -11,7 +11,9 @@ import {
 import {
   downTetromino,
   leftTetromino,
-  rightTetromino
+  rightTetromino,
+  rotateLeftTetromino,
+  rotateRightTetromino
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
@@ -33,8 +35,29 @@ const callbackLeft = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
   leftedTetromino && setTetrominoData(leftedTetromino);
 };
 
+const callbackRR = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
+  const RRTetromino = rotateRightTetromino({
+    gameBoardData,
+    tetrominoData
+  });
+
+  RRTetromino && setTetrominoData(RRTetromino);
+};
+
+const callbackRL = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
+  const RLTetromino = rotateLeftTetromino({ gameBoardData, tetrominoData });
+
+  RLTetromino && setTetrominoData(RLTetromino);
+};
+
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
-  const { pressedDown, pressedLeft, pressedRight } = inputsContext;
+  const {
+    pressedDown,
+    pressedLeft,
+    pressedRight,
+    pressedRR,
+    pressedRL
+  } = inputsContext;
   const [gameBoardData, setGameBoardData] = useState(gameBoardDataFixtures[0]);
   const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[1]);
   const refCanvasTetris = useRef(null);
@@ -125,6 +148,28 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
     },
     pressedLeft ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
   );
+
+  useEffect(() => {
+    if (pressedRR) {
+      callbackRR({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    }
+  }, [pressedRR]);
+
+  useEffect(() => {
+    if (pressedRL) {
+      callbackRL({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    }
+  }, [pressedRL]);
 
   return (
     <React.Fragment>

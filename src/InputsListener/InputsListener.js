@@ -14,6 +14,8 @@ const InputsListener = ({ children }) => {
   const [pressedUp, setPressedUp] = useState(false);
   const [pressedRight, setPressedRight] = useState(false);
   const [pressedLeft, setPressedLeft] = useState(false);
+  const [pressedRR, setPressedRR] = useState(false);
+  const [pressedRL, setPressedRL] = useState(false);
 
   return (
     <React.Fragment>
@@ -61,8 +63,37 @@ const InputsListener = ({ children }) => {
           setPressed: setPressedLeft
         })}
       />
+      <Hotkeys
+        keyName="o"
+        onKeyDown={handleKeyPressed({
+          pressed: true,
+          setPressed: setPressedRL
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedRL
+        })}
+      />
+      <Hotkeys
+        keyName="p"
+        onKeyDown={handleKeyPressed({
+          pressed: true,
+          setPressed: setPressedRR
+        })}
+        onKeyUp={handleKeyPressed({
+          pressed: false,
+          setPressed: setPressedRR
+        })}
+      />
       <InputsContext.Provider
-        value={{ pressedDown, pressedUp, pressedRight, pressedLeft }}
+        value={{
+          pressedDown,
+          pressedUp,
+          pressedRight,
+          pressedLeft,
+          pressedRR,
+          pressedRL
+        }}
       >
         {children}
       </InputsContext.Provider>

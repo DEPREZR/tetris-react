@@ -105,3 +105,55 @@ export const rightTetromino = ({ gameBoardData, tetrominoData }) => {
 
   return undefined;
 };
+
+export const rotateLayerLeft = ({ tetrominoData }) => {
+  let { currentLayerIndex } = tetrominoData;
+
+  currentLayerIndex--;
+  if (currentLayerIndex < 0) currentLayerIndex = 3;
+
+  return { ...tetrominoData, currentLayerIndex };
+};
+
+export const rotateLayerRight = ({ tetrominoData }) => {
+  let { currentLayerIndex } = tetrominoData;
+
+  currentLayerIndex++;
+  if (currentLayerIndex > 3) currentLayerIndex = 0;
+
+  return { ...tetrominoData, currentLayerIndex };
+};
+
+export const rotateLeftTetromino = ({ gameBoardData, tetrominoData }) => {
+  const tetrominoDataRotated = rotateLayerLeft({ tetrominoData });
+
+  if (
+    !tetrominoDataCollideGameBoardData({
+      gameBoardData,
+      tetrominoData: tetrominoDataRotated
+    }) &&
+    !tetrominoDataGoOutsideRight({ tetrominoData: tetrominoDataRotated }) &&
+    !tetrominoDataGoOutsideLeft({ tetrominoData: tetrominoDataRotated }) &&
+    !tetrominoDataGoOutsideDown({ tetrominoData: tetrominoDataRotated })
+  )
+    return tetrominoDataRotated;
+
+  return undefined;
+};
+
+export const rotateRightTetromino = ({ gameBoardData, tetrominoData }) => {
+  const tetrominoDataRotated = rotateLayerRight({ tetrominoData });
+
+  if (
+    !tetrominoDataCollideGameBoardData({
+      gameBoardData,
+      tetrominoData: tetrominoDataRotated
+    }) &&
+    !tetrominoDataGoOutsideRight({ tetrominoData: tetrominoDataRotated }) &&
+    !tetrominoDataGoOutsideLeft({ tetrominoData: tetrominoDataRotated }) &&
+    !tetrominoDataGoOutsideDown({ tetrominoData: tetrominoDataRotated })
+  )
+    return tetrominoDataRotated;
+
+  return undefined;
+};
