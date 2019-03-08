@@ -4,15 +4,14 @@ import PropTypes from 'prop-types';
 import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
 import { tetrominoDataFixtures } from 'Fixtures/tetrominoData';
-import { INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED } from 'constants.js';
+import {
+  INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED,
+  INTERVAL_AUTO_DOWN
+} from 'constants.js';
 import { downTetromino } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
-const callbackDownInputPressed = ({
-  tetrominoData,
-  setTetrominoData,
-  gameBoardData
-}) => {
+const callbackDown = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
 
   downedTetromino && setTetrominoData(downedTetromino);
@@ -32,7 +31,7 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
 
   useEffect(() => {
     if (pressedDown) {
-      callbackDownInputPressed({
+      callbackDown({
         tetrominoData,
         setTetrominoData,
         gameBoardData,
@@ -43,7 +42,7 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
 
   useInterval(
     () => {
-      callbackDownInputPressed({
+      callbackDown({
         tetrominoData,
         setTetrominoData,
         gameBoardData,
@@ -51,6 +50,18 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
       });
     },
     pressedDown ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
+  );
+
+  useInterval(
+    () => {
+      callbackDown({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    },
+    pressedDown ? null : INTERVAL_AUTO_DOWN
   );
 
   return (
