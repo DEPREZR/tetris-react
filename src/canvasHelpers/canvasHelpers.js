@@ -1,3 +1,5 @@
+import { findLayer } from 'businessHelpers/businessHelpers';
+
 export const drawSquare = ({ ctx, x, y, color, sideSquare }) => {
   const linearGradientBeginning = 0;
   const linearGradientEnding = 1;
@@ -28,20 +30,18 @@ export const drawSquare = ({ ctx, x, y, color, sideSquare }) => {
 };
 
 export const drawAllSquares = ({ ctx, gameBoardData, sideSquare }) =>
-  gameBoardData
-    .slice(2)
-    .forEach((gameBoardDataLine, indexGameBoardDataLine) => {
-      gameBoardDataLine.forEach((gameBoardDataCell, indexGameBoardDataCell) => {
-        gameBoardDataCell &&
-          drawSquare({
-            ctx,
-            x: indexGameBoardDataCell * sideSquare,
-            y: indexGameBoardDataLine * sideSquare,
-            color: gameBoardDataCell.color,
-            sideSquare
-          });
+  gameBoardData.forEach(gameBoardDataCell => {
+    const y = gameBoardDataCell.y - 2;
+
+    if (y >= 0)
+      drawSquare({
+        ctx,
+        x: gameBoardDataCell.x * sideSquare,
+        y: y * sideSquare,
+        color: gameBoardDataCell.color,
+        sideSquare
       });
-    });
+  });
 
 export const drawColumns = ({ ctx, sideSquare, nbColumns }) => {
   const initY = 0;
@@ -65,12 +65,32 @@ export const drawLines = ({ ctx, sideSquare, nbLines }) => {
   }
 };
 
-export const drawGameBoard = ({ ctx, gameBoardData }) => {
+export const drawGameBoard = ({ ctx, gameBoardData, tetrominoData }) => {
   const nbLines = 20;
   const nbColumns = 10;
   const sideSquare = ctx.canvas.height / nbLines;
 
+  ctx.clearRect(0, 0, 300, 600);
   drawLines({ ctx, sideSquare, nbLines });
   drawColumns({ ctx, sideSquare, nbColumns });
   drawAllSquares({ ctx, gameBoardData, sideSquare });
+  drawTetromino({ ctx, tetrominoData, sideSquare });
+};
+
+export const drawTetromino = ({ ctx, tetrominoData, sideSquare }) => {
+  const tetrominoLayer = findLayer(tetrominoData);
+  const { x: initialX, y: initialY } = tetrominoData.position;
+
+  tetrominoLayer.forEach(tetrominoDataCell => {
+    const y = tetrominoDataCell.y + initialY - 2;
+
+    if (y >= 0)
+      drawSquare({
+        ctx,
+        x: (tetrominoDataCell.x + initialX) * sideSquare,
+        y: y * sideSquare,
+        color: tetrominoDataCell.color,
+        sideSquare
+      });
+  });
 };
