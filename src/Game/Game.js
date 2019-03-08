@@ -8,7 +8,11 @@ import {
   INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED,
   INTERVAL_AUTO_DOWN
 } from 'constants.js';
-import { downTetromino } from 'businessHelpers/businessHelpers';
+import {
+  downTetromino,
+  leftTetromino,
+  rightTetromino
+} from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
 const callbackDown = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
@@ -17,10 +21,22 @@ const callbackDown = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
   downedTetromino && setTetrominoData(downedTetromino);
 };
 
+const callbackRight = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
+  const rightedTetromino = rightTetromino({ gameBoardData, tetrominoData });
+
+  rightedTetromino && setTetrominoData(rightedTetromino);
+};
+
+const callbackLeft = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
+  const leftedTetromino = leftTetromino({ gameBoardData, tetrominoData });
+
+  leftedTetromino && setTetrominoData(leftedTetromino);
+};
+
 const Game = ({ inputsContext = useContext(InputsContext) }) => {
-  const { pressedDown, pressedLeft } = inputsContext;
+  const { pressedDown, pressedLeft, pressedRight } = inputsContext;
   const [gameBoardData, setGameBoardData] = useState(gameBoardDataFixtures[0]);
-  const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[0]);
+  const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[1]);
   const refCanvasTetris = useRef(null);
 
   useEffect(() => {
@@ -62,6 +78,52 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
       });
     },
     pressedDown ? null : INTERVAL_AUTO_DOWN
+  );
+
+  useEffect(() => {
+    if (pressedRight) {
+      callbackRight({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    }
+  }, [pressedRight]);
+
+  useInterval(
+    () => {
+      callbackRight({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    },
+    pressedRight ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
+  );
+
+  useEffect(() => {
+    if (pressedLeft) {
+      callbackLeft({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    }
+  }, [pressedLeft]);
+
+  useInterval(
+    () => {
+      callbackLeft({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    },
+    pressedLeft ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
   );
 
   return (
