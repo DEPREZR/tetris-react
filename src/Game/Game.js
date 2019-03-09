@@ -157,13 +157,9 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
   }, [pressedRL]);
 
   return (
-    <React.Fragment>
-      <p>{`You are ${pressedDown ? '' : 'not'} pressing down arrow`}</p>
-      <p>{`You are ${pressedLeft ? '' : 'not'} pressing left arrow`}</p>
-      <GameContext.Provider value={{ gameBoardData, tetrominoData }}>
-        <GameBoard />
-      </GameContext.Provider>
-    </React.Fragment>
+    <GameContext.Provider value={{ gameBoardData, tetrominoData }}>
+      <GameBoard />
+    </GameContext.Provider>
   );
 };
 
