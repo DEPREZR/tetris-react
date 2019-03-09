@@ -74,19 +74,22 @@ export const drawGameBoardBackground = ({ ctx }) => {
   drawColumns({ ctx, sideSquare, nbColumns });
 };
 
-export const drawGameBoard = ({ ctx, gameBoardData, tetrominoData }) => {
+export const drawGameBoard = ({ ctx, gameBoardData }) => {
   const nbLines = 20;
   const sideSquare = ctx.canvas.height / nbLines;
 
   ctx.clearRect(0, 0, 300, 600);
 
   drawAllSquares({ ctx, gameBoardData, sideSquare });
-  drawTetromino({ ctx, tetrominoData, sideSquare });
 };
 
-export const drawTetromino = ({ ctx, tetrominoData, sideSquare }) => {
+export const drawTetromino = ({ ctx, tetrominoData }) => {
+  const nbLines = 20;
+  const sideSquare = ctx.canvas.height / nbLines;
   const tetrominoLayer = findLayer(tetrominoData);
   const { x: initialX, y: initialY } = tetrominoData.position;
+
+  ctx.clearRect(0, 0, 300, 600);
 
   tetrominoLayer.forEach(tetrominoDataCell => {
     const y = tetrominoDataCell.y + initialY - 2;

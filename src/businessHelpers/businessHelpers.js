@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { T_TETROMINO_LAYERS } from 'constants.js';
 
 export const tetrominoDataCollideGameBoardData = ({
   gameBoardData,
@@ -156,4 +157,28 @@ export const rotateRightTetromino = ({ gameBoardData, tetrominoData }) => {
     return tetrominoDataRotated;
 
   return undefined;
+};
+
+export const generateTetrominoData = () => ({
+  position: { x: 3, y: 2 },
+  layers: T_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+});
+
+export const popNewTetromino = ({ tetrominoData, gameBoardData }) => {
+  const tetrominoLayer = findLayer(tetrominoData);
+  const { x: initialX, y: initialY } = tetrominoData.position;
+
+  const newGameBoardData = [
+    ...gameBoardData,
+    ...tetrominoLayer.map(tetrominoLayerCell => ({
+      ...tetrominoLayerCell,
+      x: tetrominoLayerCell.x + initialX,
+      y: tetrominoLayerCell.y + initialY
+    }))
+  ];
+
+  const newTetrominoData = generateTetrominoData();
+
+  return [newTetrominoData, newGameBoardData];
 };

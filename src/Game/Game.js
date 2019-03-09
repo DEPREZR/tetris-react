@@ -13,16 +13,31 @@ import {
   leftTetromino,
   rightTetromino,
   rotateLeftTetromino,
-  rotateRightTetromino
+  rotateRightTetromino,
+  popNewTetromino
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
 export const GameContext = React.createContext();
 
-const callbackDown = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
+const callbackDown = ({
+  tetrominoData,
+  setTetrominoData,
+  gameBoardData,
+  setGameBoardData
+}) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
 
-  downedTetromino && setTetrominoData(downedTetromino);
+  if (downedTetromino) setTetrominoData(downedTetromino);
+  else {
+    const [newTetrominoData, newGameBoardData] = popNewTetromino({
+      tetrominoData,
+      gameBoardData
+    });
+
+    setTetrominoData(newTetrominoData);
+    setGameBoardData(newGameBoardData);
+  }
 };
 
 const callbackRight = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
