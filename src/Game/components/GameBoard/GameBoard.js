@@ -14,13 +14,13 @@ const GameBoard = () => {
     const ctx = refCanvasGameBoardBackground.current.getContext('2d');
 
     drawGameBoardBackground({ ctx });
-  }, [refCanvasGameBoardBackground]);
+  }, []);
 
   useEffect(() => {
     const ctx = refCanvasGameBoard.current.getContext('2d');
 
     drawGameBoard({ ctx, gameBoardData, tetrominoData });
-  }, [refCanvasGameBoard, gameBoardData, tetrominoData]);
+  }, [gameBoardData, tetrominoData]);
 
   return (
     <div style={{ border: '2px solid black', width: '300px', height: '600px' }}>
