@@ -65,14 +65,21 @@ export const drawLines = ({ ctx, sideSquare, nbLines }) => {
   }
 };
 
-export const drawGameBoard = ({ ctx, gameBoardData, tetrominoData }) => {
+export const drawGameBoardBackground = ({ ctx }) => {
   const nbLines = 20;
   const nbColumns = 10;
   const sideSquare = ctx.canvas.height / nbLines;
 
-  ctx.clearRect(0, 0, 300, 600);
   drawLines({ ctx, sideSquare, nbLines });
   drawColumns({ ctx, sideSquare, nbColumns });
+};
+
+export const drawGameBoard = ({ ctx, gameBoardData, tetrominoData }) => {
+  const nbLines = 20;
+  const sideSquare = ctx.canvas.height / nbLines;
+
+  ctx.clearRect(0, 0, 300, 600);
+
   drawAllSquares({ ctx, gameBoardData, sideSquare });
   drawTetromino({ ctx, tetrominoData, sideSquare });
 };
