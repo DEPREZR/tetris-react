@@ -35,8 +35,8 @@ const callbackDown = ({
       gameBoardData
     });
 
-    setTetrominoData(newTetrominoData);
     setGameBoardData(newGameBoardData);
+    setTetrominoData(newTetrominoData);
   }
 };
 
