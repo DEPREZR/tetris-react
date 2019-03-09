@@ -14,7 +14,8 @@ import {
   rightTetromino,
   rotateLeftTetromino,
   rotateRightTetromino,
-  popNewTetromino
+  popNewTetromino,
+  removeFullLines
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
@@ -35,7 +36,11 @@ const callbackDown = ({
       gameBoardData
     });
 
-    setGameBoardData(newGameBoardData);
+    const gameBoardDataCleaned = removeFullLines({
+      gameBoardData: newGameBoardData
+    });
+
+    setGameBoardData(gameBoardDataCleaned);
     setTetrominoData(newTetrominoData);
   }
 };

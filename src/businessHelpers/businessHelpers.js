@@ -182,3 +182,19 @@ export const popNewTetromino = ({ tetrominoData, gameBoardData }) => {
 
   return [newTetrominoData, newGameBoardData];
 };
+
+export const removeFullLines = ({ gameBoardData }) =>
+  Object.values(_.groupBy(gameBoardData, 'y'))
+    .reduce(
+      (cleanedGameBoardData, line) =>
+        line.length < 10
+          ? [...cleanedGameBoardData, line]
+          : cleanedGameBoardData.map(lineToDown =>
+              lineToDown.map(cellToDown => ({
+                ...cellToDown,
+                y: cellToDown.y + 1
+              }))
+            ),
+      []
+    )
+    .flat();
