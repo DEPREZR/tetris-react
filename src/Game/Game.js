@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { InputsContext } from 'InputsListener';
 import PropTypes from 'prop-types';
-import { drawGameBoard } from 'canvasHelpers/canvasHelpers';
+import GameBoard from './components/GameBoard';
 import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
 import { tetrominoDataFixtures } from 'Fixtures/tetrominoData';
 import {
@@ -16,6 +16,8 @@ import {
   rotateRightTetromino
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
+
+export const GameContext = React.createContext();
 
 const callbackDown = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
@@ -60,13 +62,20 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
   } = inputsContext;
   const [gameBoardData, setGameBoardData] = useState(gameBoardDataFixtures[0]);
   const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[1]);
-  const refCanvasTetris = useRef(null);
 
-  useEffect(() => {
-    const ctx = refCanvasTetris.current.getContext('2d');
-
-    drawGameBoard({ ctx, gameBoardData, tetrominoData });
-  }, [refCanvasTetris, gameBoardData, tetrominoData]);
+  useInterval(
+    () => {
+      callbackDown({
+        tetrominoData,
+        setTetrominoData,
+        gameBoardData,
+        setGameBoardData
+      });
+    },
+    pressedDown
+      ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED
+      : INTERVAL_AUTO_DOWN
+  );
 
   useEffect(() => {
     if (pressedDown) {
@@ -78,30 +87,6 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
       });
     }
   }, [pressedDown]);
-
-  useInterval(
-    () => {
-      callbackDown({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
-      });
-    },
-    pressedDown ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
-  );
-
-  useInterval(
-    () => {
-      callbackDown({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
-      });
-    },
-    pressedDown ? null : INTERVAL_AUTO_DOWN
-  );
 
   useEffect(() => {
     if (pressedRight) {
@@ -175,12 +160,9 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
     <React.Fragment>
       <p>{`You are ${pressedDown ? '' : 'not'} pressing down arrow`}</p>
       <p>{`You are ${pressedLeft ? '' : 'not'} pressing left arrow`}</p>
-      <canvas
-        ref={refCanvasTetris}
-        width={300}
-        height={600}
-        style={{ border: '2px solid black' }}
-      />
+      <GameContext.Provider value={{ gameBoardData, tetrominoData }}>
+        <GameBoard />
+      </GameContext.Provider>
     </React.Fragment>
   );
 };
