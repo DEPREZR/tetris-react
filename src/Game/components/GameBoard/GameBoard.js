@@ -7,7 +7,9 @@ import {
 } from 'canvasHelpers/canvasHelpers';
 
 const GameBoard = () => {
-  const { gameBoardData, tetrominoData } = useContext(GameContext);
+  const { gameBoardData, tetrominoData, removedLines, level } = useContext(
+    GameContext
+  );
   const refCanvasGameBoard = useRef(null);
   const refCanvasGameBoardBackground = useRef(null);
   const refCanvasTetromino = useRef(null);
@@ -31,26 +33,32 @@ const GameBoard = () => {
   }, [tetrominoData]);
 
   return (
-    <div style={{ border: '2px solid black', width: '300px', height: '600px' }}>
-      <canvas
-        style={{ position: 'absolute', zIndex: '1' }}
-        width={300}
-        height={600}
-        ref={refCanvasGameBoardBackground}
-      />
-      <canvas
-        style={{ position: 'absolute', zIndex: '2' }}
-        width={300}
-        height={600}
-        ref={refCanvasGameBoard}
-      />
-      <canvas
-        style={{ position: 'absolute', zIndex: '3' }}
-        width={300}
-        height={600}
-        ref={refCanvasTetromino}
-      />
-    </div>
+    <React.Fragment>
+      <p>{`lines removed: ${removedLines}`}</p>
+      <p>{`level: ${level}`}</p>
+      <div
+        style={{ border: '2px solid black', width: '300px', height: '600px' }}
+      >
+        <canvas
+          style={{ position: 'absolute', zIndex: '1' }}
+          width={300}
+          height={600}
+          ref={refCanvasGameBoardBackground}
+        />
+        <canvas
+          style={{ position: 'absolute', zIndex: '2' }}
+          width={300}
+          height={600}
+          ref={refCanvasGameBoard}
+        />
+        <canvas
+          style={{ position: 'absolute', zIndex: '3' }}
+          width={300}
+          height={600}
+          ref={refCanvasTetromino}
+        />
+      </div>
+    </React.Fragment>
   );
 };
 
