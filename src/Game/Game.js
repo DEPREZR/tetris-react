@@ -25,7 +25,11 @@ const callbackDown = ({
   setTetrominoData,
   gameBoardData,
   setGameBoardData,
-  giveTetromino
+  giveTetromino,
+  removedLines,
+  setRemovedLines,
+  level,
+  setLevel
 }) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
 
@@ -38,7 +42,11 @@ const callbackDown = ({
     });
 
     const gameBoardDataCleaned = removeFullLines({
-      gameBoardData: newGameBoardData
+      gameBoardData: newGameBoardData,
+      removedLines,
+      setRemovedLines,
+      level,
+      setLevel
     });
 
     setGameBoardData(gameBoardDataCleaned);
@@ -88,6 +96,8 @@ const Game = ({
 
   const [gameBoardData, setGameBoardData] = useState([]);
   const [tetrominoData, setTetrominoData] = useState(firstTetromino);
+  const [removedLines, setRemovedLines] = useState(0);
+  const [level, setLevel] = useState(0);
 
   useInterval(
     () => {
@@ -96,7 +106,11 @@ const Game = ({
         setTetrominoData,
         gameBoardData,
         setGameBoardData,
-        giveTetromino
+        giveTetromino,
+        removedLines,
+        setRemovedLines,
+        level,
+        setLevel
       });
     },
     pressedDown
@@ -111,7 +125,11 @@ const Game = ({
         setTetrominoData,
         gameBoardData,
         setGameBoardData,
-        giveTetromino
+        giveTetromino,
+        removedLines,
+        setRemovedLines,
+        level,
+        setLevel
       });
     }
   }, [pressedDown]);
@@ -185,7 +203,9 @@ const Game = ({
   }, [pressedRL]);
 
   return (
-    <GameContext.Provider value={{ gameBoardData, tetrominoData }}>
+    <GameContext.Provider
+      value={{ gameBoardData, tetrominoData, removedLines, level }}
+    >
       <GameBoard />
     </GameContext.Provider>
   );
