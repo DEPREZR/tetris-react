@@ -1,5 +1,6 @@
 export const INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED = 100;
 export const INTERVAL_AUTO_DOWN = 1000;
+export const NUMBER_OUTSIDE_LINES = 20;
 export const T_TETROMINO_LAYERS = [
   [
     { color: 'purple', x: 1, y: 0 },

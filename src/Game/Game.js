@@ -81,7 +81,7 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
     pressedRL
   } = inputsContext;
   const [gameBoardData, setGameBoardData] = useState(gameBoardDataFixtures[0]);
-  const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[1]);
+  const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[0]);
 
   useInterval(
     () => {

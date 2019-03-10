@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { T_TETROMINO_LAYERS } from 'constants.js';
+import { T_TETROMINO_LAYERS, NUMBER_OUTSIDE_LINES } from 'constants.js';
 
 export const tetrominoDataCollideGameBoardData = ({
   gameBoardData,
@@ -49,7 +49,7 @@ export const tetrominoDataGoOutsideDown = ({ tetrominoData }) => {
   } = tetrominoData;
 
   return !!tetrominoLayer.find(tetrominoLayerCell => {
-    return tetrominoLayerCell.y + initialY > 21;
+    return tetrominoLayerCell.y + initialY > 19 + NUMBER_OUTSIDE_LINES;
   });
 };
 
@@ -160,7 +160,7 @@ export const rotateRightTetromino = ({ gameBoardData, tetrominoData }) => {
 };
 
 export const generateTetrominoData = () => ({
-  position: { x: 3, y: 2 },
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
   layers: T_TETROMINO_LAYERS,
   currentLayerIndex: 0
 });

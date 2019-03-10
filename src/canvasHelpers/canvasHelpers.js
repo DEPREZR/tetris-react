@@ -1,4 +1,5 @@
 import { findLayer } from 'businessHelpers/businessHelpers';
+import { NUMBER_OUTSIDE_LINES } from 'constants.js';
 
 export const drawSquare = ({ ctx, x, y, color, sideSquare }) => {
   const linearGradientBeginning = 0;
@@ -31,7 +32,7 @@ export const drawSquare = ({ ctx, x, y, color, sideSquare }) => {
 
 export const drawAllSquares = ({ ctx, gameBoardData, sideSquare }) =>
   gameBoardData.forEach(gameBoardDataCell => {
-    const y = gameBoardDataCell.y - 2;
+    const y = gameBoardDataCell.y - NUMBER_OUTSIDE_LINES;
 
     if (y >= 0)
       drawSquare({
@@ -92,7 +93,7 @@ export const drawTetromino = ({ ctx, tetrominoData }) => {
   ctx.clearRect(0, 0, 300, 600);
 
   tetrominoLayer.forEach(tetrominoDataCell => {
-    const y = tetrominoDataCell.y + initialY - 2;
+    const y = tetrominoDataCell.y + initialY - NUMBER_OUTSIDE_LINES;
 
     if (y >= 0)
       drawSquare({
