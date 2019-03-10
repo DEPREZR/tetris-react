@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import InputsListener from 'InputsListener';
+import TetrominosProvider from 'TetrominosProvider';
 import Game from 'Game';
 
 class App extends Component {
@@ -8,10 +9,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p>Tetris React</p>
-          <InputsListener>
-            <Game />
-          </InputsListener>
+          <TetrominosProvider>
+            <InputsListener>
+              <Game />
+            </InputsListener>
+          </TetrominosProvider>
         </header>
       </div>
     );
