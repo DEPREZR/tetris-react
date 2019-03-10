@@ -27,6 +27,11 @@ export const T_TETROMINO_LAYERS = [
     { color: 'purple', x: 1, y: 2 }
   ]
 ];
+export const INITIAL_T_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: T_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const I_TETROMINO_LAYERS = [
   [
     { color: 'cyan', x: 0, y: 1 },
@@ -53,6 +58,11 @@ export const I_TETROMINO_LAYERS = [
     { color: 'cyan', x: 1, y: 3 }
   ]
 ];
+export const INITIAL_I_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: I_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const O_TETROMINO_LAYERS = [
   [
     { color: 'yellow', x: 1, y: 0 },
@@ -79,6 +89,11 @@ export const O_TETROMINO_LAYERS = [
     { color: 'yellow', x: 2, y: 1 }
   ]
 ];
+export const INITIAL_O_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: O_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const L_TETROMINO_LAYERS = [
   [
     { color: 'orange', x: 2, y: 0 },
@@ -105,6 +120,11 @@ export const L_TETROMINO_LAYERS = [
     { color: 'orange', x: 1, y: 2 }
   ]
 ];
+export const INITIAL_L_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: L_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const J_TETROMINO_LAYERS = [
   [
     { color: 'darkblue', x: 0, y: 0 },
@@ -131,6 +151,11 @@ export const J_TETROMINO_LAYERS = [
     { color: 'darkblue', x: 1, y: 2 }
   ]
 ];
+export const INITIAL_J_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: J_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const Z_TETROMINO_LAYERS = [
   [
     { color: 'red', x: 0, y: 0 },
@@ -157,6 +182,11 @@ export const Z_TETROMINO_LAYERS = [
     { color: 'red', x: 0, y: 2 }
   ]
 ];
+export const INITIAL_Z_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: Z_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
 export const S_TETROMINO_LAYERS = [
   [
     { color: 'lime', x: 1, y: 0 },
@@ -183,3 +213,8 @@ export const S_TETROMINO_LAYERS = [
     { color: 'lime', x: 1, y: 2 }
   ]
 ];
+export const INITIAL_S_TETROMINO = {
+  position: { x: 3, y: -2 + NUMBER_OUTSIDE_LINES },
+  layers: S_TETROMINO_LAYERS,
+  currentLayerIndex: 0
+};
