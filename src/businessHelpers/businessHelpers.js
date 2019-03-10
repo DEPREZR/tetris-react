@@ -205,7 +205,10 @@ export const removeFullLines = ({
     }, [])
     .flat();
 
-  if (Math.trunc(initialRemovedLines / 10) !== Math.trunc(removedLines / 10)) {
+  if (
+    level < 14 &&
+    Math.trunc(initialRemovedLines / 10) !== Math.trunc(removedLines / 10)
+  ) {
     setLevel(level + 1);
   }
   setRemovedLines(removedLines);

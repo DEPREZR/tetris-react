@@ -1,5 +1,21 @@
 export const INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED = 100;
-export const INTERVAL_AUTO_DOWN = 1000;
+export const INTERVALS_AUTO_DOWN = [
+  1000,
+  793,
+  618,
+  473,
+  355,
+  262,
+  190,
+  135,
+  94,
+  64,
+  43,
+  28,
+  18,
+  11,
+  7
+];
 export const NUMBER_OUTSIDE_LINES = 20;
 export const T_TETROMINO_LAYERS = [
   [

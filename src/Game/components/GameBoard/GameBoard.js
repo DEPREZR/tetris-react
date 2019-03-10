@@ -35,7 +35,7 @@ const GameBoard = () => {
   return (
     <React.Fragment>
       <p>{`lines removed: ${removedLines}`}</p>
-      <p>{`level: ${level}`}</p>
+      <p>{`level: ${level + 1}`}</p>
       <div
         style={{ border: '2px solid black', width: '300px', height: '600px' }}
       >

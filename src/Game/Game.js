@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import GameBoard from './components/GameBoard';
 import {
   INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED,
-  INTERVAL_AUTO_DOWN
+  INTERVALS_AUTO_DOWN
 } from 'constants.js';
 import {
   downTetromino,
@@ -115,7 +115,7 @@ const Game = ({
     },
     pressedDown
       ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED
-      : INTERVAL_AUTO_DOWN
+      : INTERVALS_AUTO_DOWN[level]
   );
 
   useEffect(() => {
