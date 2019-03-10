@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { InputsContext } from 'InputsListener';
+import { TetrominosContext } from 'TetrominosProvider';
 import PropTypes from 'prop-types';
 import GameBoard from './components/GameBoard';
-import { gameBoardDataFixtures } from 'Fixtures/gameBoardData';
-import { tetrominoDataFixtures } from 'Fixtures/tetrominoData';
 import {
   INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED,
   INTERVAL_AUTO_DOWN
@@ -25,7 +24,8 @@ const callbackDown = ({
   tetrominoData,
   setTetrominoData,
   gameBoardData,
-  setGameBoardData
+  setGameBoardData,
+  giveTetromino
 }) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
 
@@ -33,7 +33,8 @@ const callbackDown = ({
   else {
     const [newTetrominoData, newGameBoardData] = popNewTetromino({
       tetrominoData,
-      gameBoardData
+      gameBoardData,
+      giveTetromino
     });
 
     const gameBoardDataCleaned = removeFullLines({
@@ -72,7 +73,10 @@ const callbackRL = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
   RLTetromino && setTetrominoData(RLTetromino);
 };
 
-const Game = ({ inputsContext = useContext(InputsContext) }) => {
+const Game = ({
+  inputsContext = useContext(InputsContext),
+  tetrominosContext = useContext(TetrominosContext)
+}) => {
   const {
     pressedDown,
     pressedLeft,
@@ -80,8 +84,10 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
     pressedRR,
     pressedRL
   } = inputsContext;
-  const [gameBoardData, setGameBoardData] = useState(gameBoardDataFixtures[0]);
-  const [tetrominoData, setTetrominoData] = useState(tetrominoDataFixtures[0]);
+  const { giveTetromino, firstTetromino } = tetrominosContext;
+
+  const [gameBoardData, setGameBoardData] = useState([]);
+  const [tetrominoData, setTetrominoData] = useState(firstTetromino);
 
   useInterval(
     () => {
@@ -89,7 +95,8 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
         tetrominoData,
         setTetrominoData,
         gameBoardData,
-        setGameBoardData
+        setGameBoardData,
+        giveTetromino
       });
     },
     pressedDown
@@ -103,7 +110,8 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
         tetrominoData,
         setTetrominoData,
         gameBoardData,
-        setGameBoardData
+        setGameBoardData,
+        giveTetromino
       });
     }
   }, [pressedDown]);
@@ -184,7 +192,8 @@ const Game = ({ inputsContext = useContext(InputsContext) }) => {
 };
 
 Game.propTypes = {
-  inputsContext: PropTypes.object
+  inputsContext: PropTypes.object,
+  tetrominosContext: PropTypes.object
 };
 
 export default Game;
