@@ -28,7 +28,6 @@ const callbackDown = ({
   giveTetromino,
   removedLines,
   setRemovedLines,
-  level,
   setLevel
 }) => {
   const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
@@ -45,7 +44,6 @@ const callbackDown = ({
       gameBoardData: newGameBoardData,
       removedLines,
       setRemovedLines,
-      level,
       setLevel
     });
 
@@ -109,7 +107,6 @@ const Game = ({
         giveTetromino,
         removedLines,
         setRemovedLines,
-        level,
         setLevel
       });
     },
@@ -128,7 +125,6 @@ const Game = ({
         giveTetromino,
         removedLines,
         setRemovedLines,
-        level,
         setLevel
       });
     }

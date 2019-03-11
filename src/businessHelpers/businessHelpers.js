@@ -185,7 +185,6 @@ export const removeFullLines = ({
   gameBoardData,
   removedLines,
   setRemovedLines,
-  level,
   setLevel
 }) => {
   const initialRemovedLines = removedLines;
@@ -205,12 +204,12 @@ export const removeFullLines = ({
     }, [])
     .flat();
 
-  if (
-    level < 14 &&
+  setLevel(prevLevel =>
+    prevLevel < 14 &&
     Math.trunc(initialRemovedLines / 10) !== Math.trunc(removedLines / 10)
-  ) {
-    setLevel(level + 1);
-  }
+      ? prevLevel + 1
+      : prevLevel
+  );
   setRemovedLines(removedLines);
 
   return boardDataWithRemovedLines;
