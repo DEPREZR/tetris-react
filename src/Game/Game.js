@@ -21,62 +21,83 @@ import { useInterval } from 'hooks/hooks';
 export const GameContext = React.createContext();
 
 const callbackDown = ({
-  tetrominoData,
-  setTetrominoData,
-  gameBoardData,
-  setGameBoardData,
   giveTetromino,
   removedLines,
   setRemovedLines,
-  setLevel
+  setLevel,
+  setTetrisData
 }) => {
-  const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
+  setTetrisData(({ gameBoardData, tetrominoData }) => {
+    const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
 
-  if (downedTetromino) setTetrominoData(downedTetromino);
-  else {
-    const [newTetrominoData, newGameBoardData] = popNewTetromino({
-      tetrominoData,
-      gameBoardData,
-      giveTetromino
-    });
+    if (downedTetromino)
+      return { gameBoardData, tetrominoData: downedTetromino };
+    else {
+      const [newTetrominoData, newGameBoardData] = popNewTetromino({
+        tetrominoData,
+        gameBoardData,
+        giveTetromino
+      });
 
-    const gameBoardDataCleaned = removeFullLines({
-      gameBoardData: newGameBoardData,
-      removedLines,
-      setRemovedLines,
-      setLevel
-    });
+      const gameBoardDataCleaned = removeFullLines({
+        gameBoardData: newGameBoardData,
+        removedLines,
+        setRemovedLines,
+        setLevel
+      });
 
-    setGameBoardData(gameBoardDataCleaned);
-    setTetrominoData(newTetrominoData);
-  }
-};
-
-const callbackRight = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
-  const rightedTetromino = rightTetromino({ gameBoardData, tetrominoData });
-
-  rightedTetromino && setTetrominoData(rightedTetromino);
-};
-
-const callbackLeft = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
-  const leftedTetromino = leftTetromino({ gameBoardData, tetrominoData });
-
-  leftedTetromino && setTetrominoData(leftedTetromino);
-};
-
-const callbackRR = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
-  const RRTetromino = rotateRightTetromino({
-    gameBoardData,
-    tetrominoData
+      return {
+        gameBoardData: gameBoardDataCleaned,
+        tetrominoData: newTetrominoData
+      };
+    }
   });
-
-  RRTetromino && setTetrominoData(RRTetromino);
 };
 
-const callbackRL = ({ tetrominoData, setTetrominoData, gameBoardData }) => {
-  const RLTetromino = rotateLeftTetromino({ gameBoardData, tetrominoData });
+const callbackRight = ({ setTetrisData }) => {
+  setTetrisData(({ tetrominoData, gameBoardData }) => {
+    const rightedTetromino = rightTetromino({ gameBoardData, tetrominoData });
 
-  RLTetromino && setTetrominoData(RLTetromino);
+    return rightedTetromino
+      ? { tetrominoData: rightedTetromino, gameBoardData }
+      : { tetrominoData, gameBoardData };
+  });
+};
+
+const callbackLeft = ({ setTetrisData }) => {
+  setTetrisData(({ tetrominoData, gameBoardData }) => {
+    const leftedTetromino = leftTetromino({ gameBoardData, tetrominoData });
+
+    return leftedTetromino
+      ? { tetrominoData: leftedTetromino, gameBoardData }
+      : { tetrominoData, gameBoardData };
+  });
+};
+
+const callbackRR = ({ setTetrisData }) => {
+  setTetrisData(({ gameBoardData, tetrominoData }) => {
+    const RRTetromino = rotateRightTetromino({
+      gameBoardData,
+      tetrominoData
+    });
+
+    return RRTetromino
+      ? { gameBoardData, tetrominoData: RRTetromino }
+      : { gameBoardData, tetrominoData };
+  });
+};
+
+const callbackRL = ({ setTetrisData }) => {
+  setTetrisData(({ gameBoardData, tetrominoData }) => {
+    const RLTetromino = rotateLeftTetromino({
+      gameBoardData,
+      tetrominoData
+    });
+
+    return RLTetromino
+      ? { gameBoardData, tetrominoData: RLTetromino }
+      : { gameBoardData, tetrominoData };
+  });
 };
 
 const Game = ({
@@ -92,18 +113,17 @@ const Game = ({
   } = inputsContext;
   const { giveTetromino, firstTetromino } = tetrominosContext;
 
-  const [gameBoardData, setGameBoardData] = useState([]);
-  const [tetrominoData, setTetrominoData] = useState(firstTetromino);
+  const [tetrisData, setTetrisData] = useState({
+    gameBoardData: [],
+    tetrominoData: firstTetromino
+  });
   const [removedLines, setRemovedLines] = useState(0);
   const [level, setLevel] = useState(0);
 
   useInterval(
     () => {
       callbackDown({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData,
+        setTetrisData,
         giveTetromino,
         removedLines,
         setRemovedLines,
@@ -118,10 +138,7 @@ const Game = ({
   useEffect(() => {
     if (pressedDown) {
       callbackDown({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData,
+        setTetrisData,
         giveTetromino,
         removedLines,
         setRemovedLines,
@@ -133,10 +150,7 @@ const Game = ({
   useEffect(() => {
     if (pressedRight) {
       callbackRight({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     }
   }, [pressedRight]);
@@ -144,10 +158,7 @@ const Game = ({
   useInterval(
     () => {
       callbackRight({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     },
     pressedRight ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
@@ -156,10 +167,7 @@ const Game = ({
   useEffect(() => {
     if (pressedLeft) {
       callbackLeft({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     }
   }, [pressedLeft]);
@@ -167,10 +175,7 @@ const Game = ({
   useInterval(
     () => {
       callbackLeft({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     },
     pressedLeft ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
@@ -179,10 +184,7 @@ const Game = ({
   useEffect(() => {
     if (pressedRR) {
       callbackRR({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     }
   }, [pressedRR]);
@@ -190,17 +192,19 @@ const Game = ({
   useEffect(() => {
     if (pressedRL) {
       callbackRL({
-        tetrominoData,
-        setTetrominoData,
-        gameBoardData,
-        setGameBoardData
+        setTetrisData
       });
     }
   }, [pressedRL]);
 
   return (
     <GameContext.Provider
-      value={{ gameBoardData, tetrominoData, removedLines, level }}
+      value={{
+        gameBoardData: tetrisData.gameBoardData,
+        tetrominoData: tetrisData.tetrominoData,
+        removedLines,
+        level
+      }}
     >
       <GameBoard />
     </GameContext.Provider>
