@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { InputsContext } from 'InputsListener';
 import { TetrominosContext } from 'TetrominosProvider';
 import PropTypes from 'prop-types';
 import GameBoard from './components/GameBoard';
 import {
   INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED,
-  INTERVALS_AUTO_DOWN
+  INTERVALS_AUTO_DOWN,
+  LOCK_DOWN_TIME
 } from 'constants.js';
 import {
   downTetromino,
@@ -25,7 +26,8 @@ const callbackDown = ({
   removedLines,
   setRemovedLines,
   setLevel,
-  setTetrisData
+  setTetrisData,
+  lockDown
 }) => {
   setTetrisData(({ gameBoardData, tetrominoData }) => {
     const downedTetromino = downTetromino({ gameBoardData, tetrominoData });
@@ -33,30 +35,36 @@ const callbackDown = ({
     if (downedTetromino)
       return { gameBoardData, tetrominoData: downedTetromino };
     else {
-      const [newTetrominoData, newGameBoardData] = popNewTetromino({
-        tetrominoData,
-        gameBoardData,
-        giveTetromino
-      });
+      if (!lockDown.current) {
+        const [newTetrominoData, newGameBoardData] = popNewTetromino({
+          tetrominoData,
+          gameBoardData,
+          giveTetromino
+        });
 
-      const gameBoardDataCleaned = removeFullLines({
-        gameBoardData: newGameBoardData,
-        removedLines,
-        setRemovedLines,
-        setLevel
-      });
+        const gameBoardDataCleaned = removeFullLines({
+          gameBoardData: newGameBoardData,
+          removedLines,
+          setRemovedLines,
+          setLevel
+        });
 
-      return {
-        gameBoardData: gameBoardDataCleaned,
-        tetrominoData: newTetrominoData
-      };
+        return {
+          gameBoardData: gameBoardDataCleaned,
+          tetrominoData: newTetrominoData
+        };
+      } else return { gameBoardData, tetrominoData };
     }
   });
 };
 
-const callbackRight = ({ setTetrisData }) => {
+const callbackRight = ({ setTetrisData, lockDown }) => {
   setTetrisData(({ tetrominoData, gameBoardData }) => {
     const rightedTetromino = rightTetromino({ gameBoardData, tetrominoData });
+
+    if (rightedTetromino) {
+      lockDown.current = lockDown.current ? lockDown.current + 1 : 1;
+    }
 
     return rightedTetromino
       ? { tetrominoData: rightedTetromino, gameBoardData }
@@ -64,9 +72,13 @@ const callbackRight = ({ setTetrisData }) => {
   });
 };
 
-const callbackLeft = ({ setTetrisData }) => {
+const callbackLeft = ({ setTetrisData, lockDown }) => {
   setTetrisData(({ tetrominoData, gameBoardData }) => {
     const leftedTetromino = leftTetromino({ gameBoardData, tetrominoData });
+
+    if (leftedTetromino) {
+      lockDown.current = lockDown.current ? lockDown.current + 1 : 1;
+    }
 
     return leftedTetromino
       ? { tetrominoData: leftedTetromino, gameBoardData }
@@ -74,12 +86,16 @@ const callbackLeft = ({ setTetrisData }) => {
   });
 };
 
-const callbackRR = ({ setTetrisData }) => {
+const callbackRR = ({ setTetrisData, lockDown }) => {
   setTetrisData(({ gameBoardData, tetrominoData }) => {
     const RRTetromino = rotateRightTetromino({
       gameBoardData,
       tetrominoData
     });
+
+    if (RRTetromino) {
+      lockDown.current = lockDown.current ? lockDown.current + 1 : 1;
+    }
 
     return RRTetromino
       ? { gameBoardData, tetrominoData: RRTetromino }
@@ -87,12 +103,16 @@ const callbackRR = ({ setTetrisData }) => {
   });
 };
 
-const callbackRL = ({ setTetrisData }) => {
+const callbackRL = ({ setTetrisData, lockDown }) => {
   setTetrisData(({ gameBoardData, tetrominoData }) => {
     const RLTetromino = rotateLeftTetromino({
       gameBoardData,
       tetrominoData
     });
+
+    if (RLTetromino) {
+      lockDown.current = lockDown.current ? lockDown.current + 1 : 1;
+    }
 
     return RLTetromino
       ? { gameBoardData, tetrominoData: RLTetromino }
@@ -119,6 +139,17 @@ const Game = ({
   });
   const [removedLines, setRemovedLines] = useState(0);
   const [level, setLevel] = useState(0);
+  const lockDown = useRef(false);
+  const idInterval = useRef(null);
+
+  useEffect(() => {
+    if (lockDown.current) {
+      clearInterval(idInterval.current);
+      idInterval.current = setTimeout(() => {
+        lockDown.current = false;
+      }, LOCK_DOWN_TIME);
+    }
+  }, [lockDown.current]);
 
   useInterval(
     () => {
@@ -127,7 +158,8 @@ const Game = ({
         giveTetromino,
         removedLines,
         setRemovedLines,
-        setLevel
+        setLevel,
+        lockDown
       });
     },
     pressedDown
@@ -142,7 +174,8 @@ const Game = ({
         giveTetromino,
         removedLines,
         setRemovedLines,
-        setLevel
+        setLevel,
+        lockDown
       });
     }
   }, [pressedDown]);
@@ -150,7 +183,8 @@ const Game = ({
   useEffect(() => {
     if (pressedRight) {
       callbackRight({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     }
   }, [pressedRight]);
@@ -158,7 +192,8 @@ const Game = ({
   useInterval(
     () => {
       callbackRight({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     },
     pressedRight ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
@@ -167,7 +202,8 @@ const Game = ({
   useEffect(() => {
     if (pressedLeft) {
       callbackLeft({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     }
   }, [pressedLeft]);
@@ -175,7 +211,8 @@ const Game = ({
   useInterval(
     () => {
       callbackLeft({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     },
     pressedLeft ? INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED : null
@@ -184,7 +221,8 @@ const Game = ({
   useEffect(() => {
     if (pressedRR) {
       callbackRR({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     }
   }, [pressedRR]);
@@ -192,7 +230,8 @@ const Game = ({
   useEffect(() => {
     if (pressedRL) {
       callbackRL({
-        setTetrisData
+        setTetrisData,
+        lockDown
       });
     }
   }, [pressedRL]);

@@ -1,4 +1,5 @@
 export const INTERVAL_BETWEEN_CALLBACKS_TOUCHED_PRESSED = 100;
+export const LOCK_DOWN_TIME = 500;
 export const INTERVALS_AUTO_DOWN = [
   1000,
   793,
