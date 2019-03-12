@@ -15,7 +15,8 @@ import {
   rotateLeftTetromino,
   rotateRightTetromino,
   popNewTetromino,
-  removeFullLines
+  removeFullLines,
+  tetrominoDataCollideGameBoardData
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
@@ -48,6 +49,21 @@ const callbackDown = ({
           setRemovedLines,
           setLevel
         });
+
+        if (
+          tetrominoDataCollideGameBoardData({
+            gameBoardData: gameBoardDataCleaned,
+            tetrominoData: newTetrominoData
+          })
+        ) {
+          setLevel(0);
+          setRemovedLines(0);
+
+          return {
+            gameBoardData: [],
+            tetrominoData: newTetrominoData
+          };
+        }
 
         return {
           gameBoardData: gameBoardDataCleaned,
