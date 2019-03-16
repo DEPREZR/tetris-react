@@ -16,7 +16,8 @@ import {
   rotateRightTetromino,
   popNewTetromino,
   removeFullLines,
-  tetrominoDataCollideGameBoardData
+  tetrominoDataCollideGameBoardData,
+  instantDownAndPop
 } from 'businessHelpers/businessHelpers';
 import { useInterval } from 'hooks/hooks';
 
@@ -71,6 +72,49 @@ const callbackDown = ({
         };
       } else return { gameBoardData, tetrominoData };
     }
+  });
+};
+
+const callbackUp = ({
+  setTetrisData,
+  giveTetromino,
+  removedLines,
+  setRemovedLines,
+  setLevel
+}) => {
+  setTetrisData(({ gameBoardData, tetrominoData }) => {
+    const [newTetrominoData, newGameBoardData] = instantDownAndPop({
+      gameBoardData,
+      tetrominoData,
+      giveTetromino
+    });
+
+    const gameBoardDataCleaned = removeFullLines({
+      gameBoardData: newGameBoardData,
+      removedLines,
+      setRemovedLines,
+      setLevel
+    });
+
+    if (
+      tetrominoDataCollideGameBoardData({
+        gameBoardData: gameBoardDataCleaned,
+        tetrominoData: newTetrominoData
+      })
+    ) {
+      setLevel(0);
+      setRemovedLines(0);
+
+      return {
+        gameBoardData: [],
+        tetrominoData: newTetrominoData
+      };
+    }
+
+    return {
+      gameBoardData: gameBoardDataCleaned,
+      tetrominoData: newTetrominoData
+    };
   });
 };
 
@@ -141,6 +185,7 @@ const Game = ({
   tetrominosContext = useContext(TetrominosContext)
 }) => {
   const {
+    pressedUp,
     pressedDown,
     pressedLeft,
     pressedRight,
@@ -251,6 +296,19 @@ const Game = ({
       });
     }
   }, [pressedRL]);
+
+  useEffect(() => {
+    if (pressedUp) {
+      callbackUp({
+        setTetrisData,
+        giveTetromino,
+        removedLines,
+        setRemovedLines,
+        setLevel,
+        lockDown
+      });
+    }
+  }, [pressedUp]);
 
   return (
     <GameContext.Provider

@@ -214,3 +214,37 @@ export const removeFullLines = ({
 
   return boardDataWithRemovedLines;
 };
+
+export const instantDownTetromino = ({ tetrominoData, gameBoardData }) => {
+  let newTetrominoData = _.cloneDeep(tetrominoData);
+
+  let downedTetrominoData = _.cloneDeep(tetrominoData);
+
+  while (downedTetrominoData) {
+    downedTetrominoData = downTetromino({
+      tetrominoData: newTetrominoData,
+      gameBoardData
+    });
+    if (downedTetrominoData)
+      newTetrominoData = _.cloneDeep(downedTetrominoData);
+  }
+
+  return newTetrominoData;
+};
+
+export const instantDownAndPop = ({
+  tetrominoData,
+  gameBoardData,
+  giveTetromino
+}) => {
+  const instantDownedTetromino = instantDownTetromino({
+    tetrominoData,
+    gameBoardData
+  });
+
+  return popNewTetromino({
+    tetrominoData: instantDownedTetromino,
+    gameBoardData,
+    giveTetromino
+  });
+};
