@@ -56,7 +56,7 @@ export const tetrominoDataGoOutsideDown = ({ tetrominoData }) => {
 export const findLayer = tetrominoData => {
   const { layers, currentLayerIndex } = tetrominoData;
 
-  return layers[currentLayerIndex];
+  return layers[currentLayerIndex].layer;
 };
 
 export const downTetromino = ({ gameBoardData, tetrominoData }) => {
