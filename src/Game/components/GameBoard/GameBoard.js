@@ -54,8 +54,8 @@ const GameBoard = () => {
         <div
           style={{
             border: '2px solid black',
-            width: '300px',
-            height: '600px'
+            width: '304px',
+            height: '604px'
           }}
         >
           <canvas
@@ -81,8 +81,8 @@ const GameBoard = () => {
         <div
           style={{
             border: '2px solid black',
-            width: '100px',
-            height: '600px'
+            width: '104px',
+            height: '604px'
           }}
           className="ml-4"
         >

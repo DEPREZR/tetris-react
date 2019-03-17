@@ -47,7 +47,7 @@ export const drawAllSquares = ({ ctx, gameBoardData, sideSquare }) =>
 export const drawColumns = ({ ctx, sideSquare, nbColumns }) => {
   const initY = 0;
 
-  for (var i = 0; i < nbColumns; i++) {
+  for (var i = 1; i < nbColumns; i++) {
     ctx.beginPath();
     ctx.moveTo(sideSquare * i, initY);
     ctx.lineTo(sideSquare * i, ctx.canvas.height);
@@ -58,7 +58,7 @@ export const drawColumns = ({ ctx, sideSquare, nbColumns }) => {
 export const drawLines = ({ ctx, sideSquare, nbLines }) => {
   const initX = 0;
 
-  for (var i = 0; i < nbLines; i++) {
+  for (var i = 1; i < nbLines; i++) {
     ctx.beginPath();
     ctx.moveTo(initX, sideSquare * i);
     ctx.lineTo(ctx.canvas.width, sideSquare * i);
