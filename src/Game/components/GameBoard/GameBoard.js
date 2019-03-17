@@ -7,7 +7,6 @@ import {
   drawGameBoardBackground,
   drawNextTetrominos
 } from 'canvasHelpers/canvasHelpers';
-import { Row, Col } from 'reactstrap';
 
 const GameBoard = () => {
   const { gameBoardData, tetrominoData, removedLines, level } = useContext(
@@ -44,56 +43,58 @@ const GameBoard = () => {
   }, [nextTetrominos]);
 
   return (
-    <div className="ml-2">
-      <p>{`lines removed: ${removedLines}`}</p>
-      <p>{`level: ${level + 1}`}</p>
-      <Row>
-        <Col xs="3">
-          <div
-            style={{
-              border: '2px solid black',
-              width: '300px',
-              height: '600px'
-            }}
-          >
-            <canvas
-              style={{ position: 'absolute', zIndex: '1' }}
-              width={300}
-              height={600}
-              ref={refCanvasGameBoardBackground}
-            />
-            <canvas
-              style={{ position: 'absolute', zIndex: '2' }}
-              width={300}
-              height={600}
-              ref={refCanvasGameBoard}
-            />
-            <canvas
-              style={{ position: 'absolute', zIndex: '3' }}
-              width={300}
-              height={600}
-              ref={refCanvasTetromino}
-            />
-          </div>
-        </Col>
-        <Col xs="9" style={{ marginLeft: '-40px' }}>
-          <div
-            style={{
-              border: '2px solid black',
-              width: '100px',
-              height: '600px'
-            }}
-          >
-            <canvas
-              style={{ position: 'absolute', zIndex: '1' }}
-              width={100}
-              height={600}
-              ref={refCanvasNextTetrominos}
-            />
-          </div>
-        </Col>
-      </Row>
-    </div>
+    <React.Fragment>
+      <div className="d-flex justify-content-center">
+        <div>
+          <p>{`lines removed: ${removedLines}`}</p>
+          <p>{`level: ${level + 1}`}</p>
+        </div>
+      </div>
+      <div className="d-flex justify-content-center flex-row">
+        <div
+          style={{
+            border: '2px solid black',
+            width: '300px',
+            height: '600px'
+          }}
+        >
+          <canvas
+            style={{ position: 'absolute', zIndex: '1' }}
+            width={300}
+            height={600}
+            ref={refCanvasGameBoardBackground}
+          />
+          <canvas
+            style={{ position: 'absolute', zIndex: '2' }}
+            width={300}
+            height={600}
+            ref={refCanvasGameBoard}
+          />
+          <canvas
+            style={{ position: 'absolute', zIndex: '3' }}
+            width={300}
+            height={600}
+            ref={refCanvasTetromino}
+          />
+        </div>
+
+        <div
+          style={{
+            border: '2px solid black',
+            width: '100px',
+            height: '600px'
+          }}
+          className="ml-4"
+        >
+          <canvas
+            style={{ position: 'absolute', zIndex: '1' }}
+            width={100}
+            height={600}
+            ref={refCanvasNextTetrominos}
+          />
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
