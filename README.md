@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Live Demo : 
+
+https://tetris-react-hooks.herokuapp.com/
+
 ## To use this project :
 
 1) Install nodejs
@@ -15,7 +19,7 @@ In the project directory, you can run:
 
 Install all dependencies (dev dependencies included)
 
-### `yarn start`
+### `yarn dev`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -35,5 +39,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
+
+### `yarn start`
+
+Start the production build with serve
 
 
