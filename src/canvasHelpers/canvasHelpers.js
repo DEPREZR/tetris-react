@@ -105,3 +105,37 @@ export const drawTetromino = ({ ctx, tetrominoData }) => {
       });
   });
 };
+
+export const drawNextTetrominos = ({ nextTetrominos, ctx }) => {
+  const sideSquare = 16;
+
+  ctx.clearRect(0, 0, 100, 600);
+
+  nextTetrominos.forEach((nextTetromino, index) => {
+    drawTetrominoInNextTetromino({
+      tetrominoData: nextTetromino,
+      ctx,
+      index,
+      sideSquare
+    });
+  });
+};
+
+export const drawTetrominoInNextTetromino = ({
+  tetrominoData,
+  ctx,
+  index,
+  sideSquare
+}) => {
+  const border = sideSquare;
+
+  tetrominoData.layers[0].layer.forEach(tetrominoDataCell => {
+    drawSquare({
+      ctx,
+      x: tetrominoDataCell.x * sideSquare + border,
+      y: (tetrominoDataCell.y + index * 5) * sideSquare + border,
+      color: tetrominoDataCell.color,
+      sideSquare
+    });
+  });
+};
