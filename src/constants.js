@@ -26,8 +26,8 @@ export const T_TETROMINO_LAYERS = [
       { color: 'purple', x: 1, y: 1 },
       { color: 'purple', x: 2, y: 1 }
     ],
-    rightShifts: [],
-    leftShifts: []
+    rightShifts: [{ x: -1, y: 0 }, { x: -1, y: -1 }, { x: -1, y: 2 }],
+    leftShifts: [{ x: 1, y: 0 }, { x: 1, y: -1 }, { x: 1, y: 2 }]
   },
   {
     layer: [
@@ -36,8 +36,18 @@ export const T_TETROMINO_LAYERS = [
       { color: 'purple', x: 2, y: 1 },
       { color: 'purple', x: 1, y: 2 }
     ],
-    rightShifts: [],
-    leftShifts: []
+    rightShifts: [
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 0, y: -2 },
+      { x: 1, y: -2 }
+    ],
+    leftShifts: [
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 0, y: -2 },
+      { x: 1, y: -1 }
+    ]
   },
   {
     layer: [
@@ -46,8 +56,8 @@ export const T_TETROMINO_LAYERS = [
       { color: 'purple', x: 2, y: 1 },
       { color: 'purple', x: 1, y: 2 }
     ],
-    rightShifts: [],
-    leftShifts: []
+    rightShifts: [{ x: 1, y: 0 }, { x: 0, y: 2 }, { x: 1, y: 2 }],
+    leftShifts: [{ x: -1, y: 0 }, { x: 0, y: 2 }, { x: -1, y: 2 }]
   },
   {
     layer: [
@@ -56,8 +66,18 @@ export const T_TETROMINO_LAYERS = [
       { color: 'purple', x: 1, y: 1 },
       { color: 'purple', x: 1, y: 2 }
     ],
-    rightShifts: [],
-    leftShifts: []
+    rightShifts: [
+      { x: -1, y: 0 },
+      { x: -1, y: 1 },
+      { x: 0, y: -2 },
+      { x: -1, y: -2 }
+    ],
+    leftShifts: [
+      { x: -1, y: 0 },
+      { x: -1, y: 1 },
+      { x: 0, y: -2 },
+      { x: -1, y: -2 }
+    ]
   }
 ];
 export const INITIAL_T_TETROMINO = {

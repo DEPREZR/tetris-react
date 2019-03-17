@@ -59,6 +59,12 @@ export const findLayer = tetrominoData => {
   return layers[currentLayerIndex].layer;
 };
 
+export const findLayerObject = tetrominoData => {
+  const { layers, currentLayerIndex } = tetrominoData;
+
+  return layers[currentLayerIndex];
+};
+
 export const downTetromino = ({ gameBoardData, tetrominoData }) => {
   const tetrominoDataDowned = _.cloneDeep(tetrominoData);
 
@@ -139,6 +145,38 @@ export const rotateLeftTetromino = ({ gameBoardData, tetrominoData }) => {
   )
     return tetrominoDataRotated;
 
+  const tetrominoLayer = findLayerObject(tetrominoData);
+
+  const shift = tetrominoLayer.leftShifts.find(leftShift => {
+    const tetrominoToTest = {
+      ...tetrominoDataRotated,
+      position: {
+        x: tetrominoDataRotated.position.x + leftShift.x,
+        y: tetrominoDataRotated.position.y + leftShift.y
+      }
+    };
+
+    return (
+      !tetrominoDataCollideGameBoardData({
+        gameBoardData,
+        tetrominoData: tetrominoToTest
+      }) &&
+      !tetrominoDataGoOutsideRight({ tetrominoData: tetrominoToTest }) &&
+      !tetrominoDataGoOutsideLeft({ tetrominoData: tetrominoToTest }) &&
+      !tetrominoDataGoOutsideDown({ tetrominoData: tetrominoToTest })
+    );
+  });
+
+  if (shift) {
+    return {
+      ...tetrominoDataRotated,
+      position: {
+        x: tetrominoDataRotated.position.x + shift.x,
+        y: tetrominoDataRotated.position.y + shift.y
+      }
+    };
+  }
+
   return undefined;
 };
 
@@ -155,6 +193,38 @@ export const rotateRightTetromino = ({ gameBoardData, tetrominoData }) => {
     !tetrominoDataGoOutsideDown({ tetrominoData: tetrominoDataRotated })
   )
     return tetrominoDataRotated;
+
+  const tetrominoLayer = findLayerObject(tetrominoData);
+
+  const shift = tetrominoLayer.rightShifts.find(leftShift => {
+    const tetrominoToTest = {
+      ...tetrominoDataRotated,
+      position: {
+        x: tetrominoDataRotated.position.x + leftShift.x,
+        y: tetrominoDataRotated.position.y + leftShift.y
+      }
+    };
+
+    return (
+      !tetrominoDataCollideGameBoardData({
+        gameBoardData,
+        tetrominoData: tetrominoToTest
+      }) &&
+      !tetrominoDataGoOutsideRight({ tetrominoData: tetrominoToTest }) &&
+      !tetrominoDataGoOutsideLeft({ tetrominoData: tetrominoToTest }) &&
+      !tetrominoDataGoOutsideDown({ tetrominoData: tetrominoToTest })
+    );
+  });
+
+  if (shift) {
+    return {
+      ...tetrominoDataRotated,
+      position: {
+        x: tetrominoDataRotated.position.x + shift.x,
+        y: tetrominoDataRotated.position.y + shift.y
+      }
+    };
+  }
 
   return undefined;
 };
